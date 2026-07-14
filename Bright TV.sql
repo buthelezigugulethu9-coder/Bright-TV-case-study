@@ -58,3 +58,21 @@ WHEN age > 50 AND Age <=60 THEN "ELDERLY"
 END AS Age_group
 FROM brighttv.dataset.userprofiles;
 
+SELECT
+CASE
+WHEN (email='' OR email IS NULL) THEN 'No email'
+WHEN (email!='' AND email IS NOT NULL) THEN 'Has email'
+END AS email_status
+FROM brighttv.dataset.userprofiles;
+
+SELECT 
+CASE
+WHEN Race="other" THEN "Unknown"
+WHEN Race=" " THEN "Unknown"
+WHEN Race IS NULL THEN "Unknown"
+ELSE Race
+END AS Race,
+COUNT(*) AS count
+FROM brighttv.dataset.userprofiles
+GROUP BY Race
+ORDER BY count DESC
