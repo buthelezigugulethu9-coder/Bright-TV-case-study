@@ -75,4 +75,47 @@ END AS Race,
 COUNT(*) AS count
 FROM brighttv.dataset.userprofiles
 GROUP BY Race
-ORDER BY count DESC
+ORDER BY count DESC;
+
+SELECT
+CASE
+WHEN `Social Media Handle`='' THEN 'No Social Media Handle'
+WHEN `Social Media Handle`!='' THEN 'Has Social Media Handle'
+END AS Social_Media_Handle_status
+FROM brighttv.dataset.userprofiles;
+
+SELECT *
+FROM brighttv.dataset.viewership;
+
+CREATE OR REPLACE TEMPORARY TABLE viewership AS
+SELECT UserID0 AS userid,
+RecordDate2 AS RecordDate,
+Channel2 AS Channel,
+`Duration 2` AS `Duration`
+FROM brighttv.dataset.viewership;
+
+SELECT *
+FROM brighttv.dataset.viewership;
+
+SELECT
+COALESCE(A.userid4,B.UserID) AS sub_id,
+A.RecordDate2,
+A.Channel2,
+A.`Duration 2`,
+B.Name,
+B.Surname,
+B.Email,
+B.Gender,
+B.Race,
+B.Age,
+B.Province,
+B.`Social Media Handle`
+FROM brighttv.dataset.viewership AS A
+LEFT JOIN brighttv.dataset.userprofiles B
+ON A.userid4=B.UserID
+
+
+
+
+
+
