@@ -1,1 +1,5 @@
-This project is about usership and viwerships
+Bright TV subsciption Analysis
+
+About the Project
+
+
