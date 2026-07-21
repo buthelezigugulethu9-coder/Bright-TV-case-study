@@ -92,6 +92,8 @@ WHEN `Social Media Handle`!='' THEN 'Has Social Media Handle'
 END AS Social_Media_Handle_status
 FROM brighttv.dataset.userprofiles;
 
+--Checking viewership dataset
+
 SELECT *
 FROM brighttv.dataset.viewership;
 
