@@ -126,10 +126,20 @@ ON A.userid4=B.UserID;
 SELECT *
 FROM brighttv.dataset.viewership;
 
---Checking if there s any roq where in the column userid0 is empty
+--Checking if there is any row where in the column userid0 is empty
 SELECT *
 FROM brighttv.dataset.viewership
-WHERE UserID0 IS NULL
+WHERE UserID0 IS NULL;
+
+SELECT *
+FROM brighttv.dataset.viewership
+WHERE UserID0 <> userid4;
+
+--Checking for duplicates
+SELECT COUNT(*)
+FROM brighttv.dataset.viewership
+GROUP BY UserID0,RecordDate2
+HAVING COUNT(*)>1
 
 
 
