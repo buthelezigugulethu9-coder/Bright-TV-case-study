@@ -1,7 +1,10 @@
 -- Databricks notebook source
+--Checking for Duplicates
 -- SELECT *
 -- FROM brighttv.dataset.userprofiles;
 
+
+--Gender checks
 -- SELECT DISTINCT gender
 -- FROM brighttv.dataset.userprofiles;
 
@@ -17,6 +20,7 @@ FROM brighttv.dataset.userprofiles;
 -- SELECT DISTINCT race
 -- FROM brighttv.dataset.userprofiles;
 
+--Race checks
 SELECT COUNT(DISTINCT userid) AS subs,
 CASE
    WHEN race = 'other' THEN 'Unknown'
@@ -28,6 +32,7 @@ END AS ethnicity
 FROM brighttv.dataset.userprofiles
 GROUP BY ethnicity;
 
+--Province checks
 SELECT DISTINCT province
 FROM brighttv.dataset.userprofiles;
 
@@ -39,6 +44,7 @@ ELSE province
 END AS province
 FROM brighttv.dataset.userprofiles;
 
+--Age checks
 SELECT DISTINCT Age
 FROM brighttv.dataset.userprofiles;
 
@@ -58,6 +64,8 @@ WHEN age > 50 AND Age <=60 THEN "ELDERLY"
 END AS Age_group
 FROM brighttv.dataset.userprofiles;
 
+
+CREATE OR REPLACE TEMPORARY TABLE userprofles AS
 SELECT
 CASE
 WHEN (email='' OR email IS NULL) THEN 'No email'
@@ -112,7 +120,16 @@ B.Province,
 B.`Social Media Handle`
 FROM brighttv.dataset.viewership AS A
 LEFT JOIN brighttv.dataset.userprofiles B
-ON A.userid4=B.UserID
+ON A.userid4=B.UserID;
+
+--Checkng all columns in the table viewership
+SELECT *
+FROM brighttv.dataset.viewership;
+
+--Checking if there s any roq where in the column userid0 is empty
+SELECT *
+FROM brighttv.dataset.viewership
+WHERE UserID0 IS NULL
 
 
 
