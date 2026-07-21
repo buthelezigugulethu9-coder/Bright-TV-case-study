@@ -99,7 +99,7 @@ CREATE OR REPLACE TEMPORARY TABLE viewership AS
 SELECT UserID0 AS userid,
 RecordDate2 AS RecordDate,
 Channel2 AS Channel,
-`Duration 2` AS `Duration`
+`Duration 2` AS Duration
 FROM brighttv.dataset.viewership;
 
 SELECT *
@@ -139,7 +139,45 @@ WHERE UserID0 <> userid4;
 SELECT COUNT(*)
 FROM brighttv.dataset.viewership
 GROUP BY UserID0,RecordDate2
+HAVING COUNT(*)>1;
+
+SELECT
+UserID0,
+RECORDDATE2,
+COUNT(*) AS DUPLICATE_COUNT
+FROM brighttv.dataset.viewership
+GROUP BY UserID0,RECORDDATE2
 HAVING COUNT(*)>1
+ORDER BY DUPLICATE_COUNT DESC;
+
+SELECT UserID0,
+TO_DATE(RecordDATE2) AS watch_date,
+date_format(RecordDate2,"HH-mm-ss") AS watch_time,
+date_format(`Duration 2`,"HH:mm:ss") AS duration,
+Channel2
+FROM brighttv.dataset.viewership
+WHERE userid0=810044;
+
+SELECT
+UserID0,
+TO_DATE(recorddate2) AS record_date,
+date_format(RecordDate2,'HH:mm:ss') AS record_time,
+date_format(`Duration 2`,'HH:mm:ss') AS duration_formatted,
+Channel2,
+ROW_NUMBER() OVER (PARTITION BY UserID0, TO_DATE(recorddate2) ORDER BY RecordDate2) AS row_number
+FROM brighttv.dataset.viewership;
+
+WITH ctel AS (SELECT DISTINCT * FROM brighttv.dataset.viewership)
+SELECT COUNT(*) AS duplicate_cnt,
+UserID0,
+TO_DATE(RecordDate2) AS watch_date,
+date_format(RecordDate2,'HH:mm:ss') AS watch_time,
+date_format(`Duration 2`,'HH:mm:ss') AS duration_formatted,
+Channel2
+FROM ctel
+GROUP BY ALL
+HAVING COUNT(*)>1
+ORDER BY duplicate_cnt DESC;
 
 
 
